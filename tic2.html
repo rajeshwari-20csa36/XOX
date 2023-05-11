@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tic Tac Toe</title>
+  <style>
+body{
+background-color:lightgreen;
+}
+button{
+background-color:green;
+color:white;
+}
+h1{
+  color:darkgreen;
+}
+    table {
+      border-collapse: collapse;
+      margin: auto;
+    }
+    td {
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 30px;
+      font-weight: bold;
+      border: 1px solid black;
+      cursor: pointer;
+    }
+    td:hover {
+      background-color: #eee;
+    }
+    .x:before {
+      content: "X";
+      color: red;
+    }
+    .o:before {
+      content: "O";
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+<center><h1>XOX </h1>
+<p>&#128515; Play with your friends &#128515;</p></center>
+  <table>
+    <tr>
+      <td class="cell"></td>
+      <td class="cell"></td>
+      <td class="cell"></td>
+    </tr>
+    <tr>
+      <td class="cell"></td>
+      <td class="cell"></td>
+      <td class="cell"></td>
+    </tr>
+    <tr>
+      <td class="cell"></td>
+      <td class="cell"></td>
+      <td class="cell"></td>
+    </tr>
+  </table><br><br>
+
+
+
+  <script>
+    var player = 1;
+    var board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    var winCombinations = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+    var gameOver = false;
+
+    function mark(cell) {
+      if (!gameOver && cell.className == "cell") {
+        if (player == 1) {
+          cell.className = "cell x";
+          board[cell.cellIndex + cell.parentNode.rowIndex * 3] = 1;
+        } else {
+          cell.className = "cell o";
+          board[cell.cellIndex + cell.parentNode.rowIndex * 3] = -1;
+        }
+        player *= -1;
+        checkWin();
+      }
+    }
+
+    function checkWin() {
+      for (var i = 0; i < winCombinations.length; i++) {
+        var sum = board[winCombinations[i][0]] + board[winCombinations[i][1]] + board[winCombinations[i][2]];
+        if (sum == 3 || sum == -3) {
+          gameOver = true;
+          alert("Player " + (sum == 3 ? "X" : "O") + " wins!");
+          break;
+        }
+      }
+    }
+
+    function reset() {
+      var cells = document.getElementsByClassName("cell");
+      for (var i = 0; i < cells.length; i++) {
+        cells[i].className = "cell";
+        board[i] = 0;
+      }
+      player = 1;
+      gameOver = false;
+    }
+
+    var cells = document.getElementsByClassName("cell");
+    for (var i = 0; i < cells.length; i++) {
+      cells[i].addEventListener("click", function() { mark(this); });
+    }
+  </script>
+
+
+
+ <center> <button onclick="reset()">Reset</button></center>
+</body>
+</html>
